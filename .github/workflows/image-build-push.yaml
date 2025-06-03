@@ -9,9 +9,11 @@ on:
 env:
   PROJECT_NUMBER: 623372444441
   PROJECT_ID: cloudrun-handson-461709
+  REGION: asia-northeast1
   WIF_POOL_ID: github-actions-pool
   WIF_POOL_PROVIDER_ID: github-actions-pool-provider
   SERVICE_ACCOUNT: github-actions-sa@cloudrun-handson-461709.iam.gserviceaccount.com
+  PLATFORMS: linux/amd64
 
 jobs:
   build-push:
@@ -38,5 +40,83 @@ jobs:
         with:
           project_id: ${{ env.PROJECT_ID }}
 
-      - name: Use gcloud cli
-        run: gcloud config list
+      - name: Docker metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          context: workflow
+          images: ${{ env.REGION }}.pkg.dev/${{ env.PROJECT_ID }}/cloudrun-handson/cloudrun-handson
+          tags: |
+            type=sha,format=long
+            type=raw,value=${{ github.ref_name }}
+            type=semver,pattern={{version}}
+
+      - name: Create docker context
+        run: docker context create builders
+
+      - name: Setup docker buildx
+        id: buildx
+        uses: docker/setup-buildx-action@v3
+        with:
+          platforms: ${{ env.PLATFORM }}
+          endpoint: builders
+          version: v0.12.0
+
+      - name: Build and Push docker image to Artifact Registry
+        uses: docker/build-push-action@v5
+        with:
+          push: true
+          context: ./app
+          file: ./app/Dockerfile
+          platforms: ${{ env.PLATFORMS }}
+          builder: ${{ steps.buildx.outputs.name }}
+          provenance: false
+          labels: ${{ steps.meta.outputs.labels }}
+          tags: ${{ steps.meta.outputs.tags }}
+
+      - name: Run Trivy vulnerability scanner (remote image)
+        uses: aquasecurity/trivy-action@d43c1f16c00cfd3978dde6c07f4bbcf9eb6993ca
+        with:
+          image-ref: ${{ steps.meta.outputs.tags }}
+          format: table
+          output: trivy-report.txt
+          exit-code: "0"
+          ignore-unfixed: "true"
+          vuln-type: os,library
+          severity: HIGH,CRITICAL
+          timeout: 10m
+
+      # - name: Build docker image
+      #   uses: docker/build-push-action@v5
+      #   with:
+      #     push: false
+      #     context: ./app
+      #     file: ./app/Dockerfile
+      #     platforms: ${{ env.PLATFORMS }}
+      #     builder: ${{ steps.buildx.outputs.name }}
+      #     provenance: false
+      #     labels: ${{ steps.meta.outputs.labels }}
+      #
+      # - name: Run trivy vulnerability scanner
+      #   uses: aquasecurity/trivy-action@d43c1f16c00cfd3978dde6c07f4bbcf9eb6993ca
+      #   with:
+      #     input: build-image-oci
+      #     format: table
+      #     output: trivy-report.txt
+      #     exit-code: "0"
+      #     ignore-unfixed: "true"
+      #     vuln-type: os,library
+      #     severity: HIGH,CRITICAL
+      #     timeout: 10m
+      #
+      # - name: Output trivy report
+      #   run: cat trivy-report.txt >> $GITHUB_STEP_SUMMARY
+      #
+      # - name: Upload trivy report
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: trivy-report-${{ strategy.job-index }}
+      #     path: trivy-report.txt
+      #     retention-days: "90"
+      #
+      # - name: Push docker image
