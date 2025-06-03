@@ -48,8 +48,6 @@ jobs:
           images: ${{ env.REGION }}.pkg.dev/${{ env.PROJECT_ID }}/cloudrun-handson/cloudrun-handson
           tags: |
             type=sha,format=long
-            type=raw,value=${{ github.ref_name }}
-            type=semver,pattern={{version}}
 
       - name: Create docker context
         run: docker context create builders
