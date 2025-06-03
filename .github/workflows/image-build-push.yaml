@@ -35,6 +35,9 @@ jobs:
           workload_identity_provider: projects/${{ env.PROJECT_NUMBER }}/locations/global/workloadIdentityPools/${{ env.WIF_POOL_ID }}/providers/${{ env.WIF_POOL_PROVIDER_ID }}
           service_account: ${{ env.SERVICE_ACCOUNT }}
 
+      - name: Configure Docker
+        run: gcloud auth configure-docker ${{ env.REGION }}-docker.pkg.dev
+
       - name: Setup gcloud
         uses: google-github-actions/setup-gcloud@v2
         with:
@@ -60,7 +63,7 @@ jobs:
           endpoint: builders
           version: v0.12.0
 
-      - name: Build and Push docker image to Artifact Registry
+      - name: Build and Push docker image
         uses: docker/build-push-action@v5
         with:
           push: true
