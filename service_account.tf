@@ -25,6 +25,12 @@ resource "google_project_iam_member" "gha_wif" {
   member  = "serviceAccount:${google_service_account.gha.email}"
 }
 
+resource "google_project_iam_member" "gha_at_getter" {
+  project = local.project_id
+  role    = "roles/iam.serviceAccountTokenCreator"
+  member  = "serviceAccount:${google_service_account.gha.email}"
+}
+
 resource "google_project_iam_member" "gha_push_ar" {
   project = local.project_id
   role    = "roles/artifactregistry.writer"
