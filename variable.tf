@@ -1,5 +1,7 @@
 locals {
-  project_id        = "cloudrun-handson-461709"
+  project_id = "cloudrun-handson-461709"
+  # tflint-ignore: terraform_unused_declarations
+  project_number    = 623372444441
   region            = "asia-northeast1"
   github_repository = "Sunaga0709/cloudrun-handson"
 

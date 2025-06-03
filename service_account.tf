@@ -19,16 +19,12 @@ resource "google_service_account" "gha" {
   depends_on = [google_project_service.activate_apis]
 }
 
-resource "google_project_iam_member" "gha_wif" {
-  project = local.project_id
-  role    = "roles/iam.workloadIdentityUser"
-  member  = "serviceAccount:${google_service_account.gha.email}"
-}
-
-resource "google_project_iam_member" "gha_at_getter" {
-  project = local.project_id
-  role    = "roles/iam.serviceAccountTokenCreator"
-  member  = "serviceAccount:${google_service_account.gha.email}"
+resource "google_artifact_registry_repository_iam_member" "gha_writer" {
+  project    = local.project_id
+  location   = local.region
+  repository = google_artifact_registry_repository.image_repo.repository_id
+  role       = "roles/artifactregistry.writer"
+  member     = "serviceAccount:${google_service_account.gha.email}"
 }
 
 resource "google_project_iam_member" "gha_push_ar" {
