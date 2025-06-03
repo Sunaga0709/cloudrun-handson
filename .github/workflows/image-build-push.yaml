@@ -94,7 +94,7 @@ jobs:
         run: |-
           gcloud run deploy ${{ env.CLOUDRUN_SERVICE }} \
             --project=${{ env.PROJECT_ID }} \
-            --image=${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.ARTIFACT_REGISTRY }}/${{ env.CLOUDRUN_SERVICE }}:${{ github.sha }} \
+            --image=${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.ARTIFACT_REGISTRY }}/${{ env.CLOUDRUN_SERVICE }}:sha-${{ github.sha }} \
             --region=${{ env.REGION }} \
             --service-account=${{ env.SERVICE_ACCOUNT }} \
             --allow-unauthenticated
