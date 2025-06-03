@@ -39,4 +39,4 @@ jobs:
           project_id: ${{ env.PROJECT_ID }}
 
       - name: Use gcloud cli
-        run: gcloud info
+        run: gcloud config list
