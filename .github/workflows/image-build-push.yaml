@@ -12,13 +12,13 @@ env:
   WIF_POOL_ID: github-actions-pool
   SERVICE_ACCOUNT: github-actions-sa@cloudrun-handson-461709.iam.gserviceaccount.com
 
+permissions:
+  id-token: write
+  contents: read
+
 jobs:
   build-push:
-    runs_on: ubuntu-latest
-
-    permission:
-      id-token: write
-      contents: read
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
