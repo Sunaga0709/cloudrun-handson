@@ -10,6 +10,7 @@ env:
   PROJECT_NUMBER: 623372444441
   PROJECT_ID: cloudrun-handson-461709
   WIF_POOL_ID: github-actions-pool
+  WIF_POOL_PROVIDER_ID: github-actions-pool-provider
   SERVICE_ACCOUNT: github-actions-sa@cloudrun-handson-461709.iam.gserviceaccount.com
 
 jobs:
@@ -29,7 +30,7 @@ jobs:
         with:
           project_id: ${{ env.PROJECT_ID }}
           token_format: "access_token"
-          workload_identity_provider: projects/${{ env.PROJECT_NUMBER }}/locations/global/workloadIdentityPools/${{ env.WIF_POOL_ID }}/providers/${{ env.PROJECT_ID }}
+          workload_identity_provider: projects/${{ env.PROJECT_NUMBER }}/locations/global/workloadIdentityPools/${{ env.WIF_POOL_ID }}/providers/${{ env.WIF_POOL_PROVIDER_ID }}
           service_account: ${{ env.SERVICE_ACCOUNT }}
 
       - name: Use gcloud cli
