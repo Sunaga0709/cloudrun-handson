@@ -1,8 +1,8 @@
 locals {
-  project_id = "cloudrun-handson-461709"
-  # tflint-ignore: terraform_unused_declarations
-  project_name = "cloudrun-handson"
-  region       = "asia-northeast1"
+  project_id        = "cloudrun-handson-461709"
+  region            = "asia-northeast1"
+  github_repository = "Sunaga0709/cloudrun-handson"
+
   activate_apis = [
     "compute",
     "vpc_access",
