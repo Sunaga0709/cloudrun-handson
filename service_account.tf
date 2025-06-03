@@ -19,6 +19,12 @@ resource "google_service_account" "gha" {
   depends_on = [google_project_service.activate_apis]
 }
 
+resource "google_service_account_iam_member" "gha_wif" {
+  service_account_id = google_service_account.gha.name
+  role               = "roles/iam.workloadIdentityUser"
+  member             = "principalSet://iam.googleapis.com/projects/${local.project_number}/locations/global/workloadIdentityPools/${google_iam_workload_identity_pool.gha.workload_identity_pool_id}/attribute.repository/${local.github_repository}"
+}
+
 resource "google_artifact_registry_repository_iam_member" "gha_writer" {
   project    = local.project_id
   location   = local.region
