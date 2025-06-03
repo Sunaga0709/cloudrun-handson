@@ -33,6 +33,12 @@ resource "google_artifact_registry_repository_iam_member" "gha_writer" {
   member     = "serviceAccount:${google_service_account.gha.email}"
 }
 
+resource "google_project_iam_member" "gha_readre" {
+  project = local.project_id
+  role    = "roles/artifactregistry.reader"
+  member  = "serviceAccount:${google_service_account.gha.email}"
+}
+
 resource "google_project_iam_member" "gha_push_ar" {
   project = local.project_id
   role    = "roles/artifactregistry.writer"
