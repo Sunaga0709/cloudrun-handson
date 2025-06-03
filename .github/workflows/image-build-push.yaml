@@ -50,7 +50,7 @@ jobs:
         uses: docker/metadata-action@v5
         with:
           context: workflow
-          images: ${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.ARTIFACT_REGISTR }}/${{ env.CLOUDRUN_SERVICE }}
+          images: ${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.ARTIFACT_REGISTRY }}/${{ env.CLOUDRUN_SERVICE }}
           tags: |
             type=sha,format=long
 
@@ -94,7 +94,7 @@ jobs:
         run: |-
           gcloud run deploy ${{ env.CLOUDRUN_SERVICE }} \
             --project=${{ env.PROJECT_ID }} \
-            --image=${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.ARTIFACT_REGISTR }}/${{ env.CLOUDRUN_SERVICE }}:${{ github.sha }} \
+            --image=${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.ARTIFACT_REGISTRY }}/${{ env.CLOUDRUN_SERVICE }}:${{ github.sha }} \
             --region=${{ env.REGION }} \
             --service-account=${{ env.SERVICE_ACCOUNT }} \
             --allow-unauthenticated
