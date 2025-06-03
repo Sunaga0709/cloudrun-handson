@@ -45,7 +45,7 @@ jobs:
         uses: docker/metadata-action@v5
         with:
           context: workflow
-          images: ${{ env.REGION }}.pkg.dev/${{ env.PROJECT_ID }}/cloudrun-handson/cloudrun-handson
+          images: ${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/cloudrun-handson/cloudrun-handson
           tags: |
             type=sha,format=long
 
