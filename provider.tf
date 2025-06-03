@@ -17,5 +17,5 @@ terraform {
 provider "google" {
   project     = local.project_id
   region      = local.region
-  credentials = file("./credentials/terraform-sa.json") # Terraformで使用するクレデンシャル
+  credentials = file("./credentials/terraform-sa.json")
 }
