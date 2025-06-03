@@ -12,13 +12,13 @@ env:
   WIF_POOL_ID: github-actions-pool
   SERVICE_ACCOUNT: github-actions-sa@cloudrun-handson-461709.iam.gserviceaccount.com
 
-permissions:
-  id-token: write
-  contents: read
-
 jobs:
   build-push:
     runs-on: ubuntu-latest
+
+    permissions:
+      id-token: write
+      contents: read
 
     steps:
       - name: Checkout
@@ -27,6 +27,7 @@ jobs:
       - name: Login Google Cloud
         uses: google-github-actions/auth@v2
         with:
+          project_id: ${{ env.PROJECT_ID }}
           token_format: "access_token"
           workload_identity_provider: projects/${{ env.PROJECT_NUMBER }}/locations/global/workloadIdentityPools/${{ env.WIF_POOL_ID }}/providers/${{ env.PROJECT_ID }}
           service_account: ${{ env.SERVICE_ACCOUNT }}
