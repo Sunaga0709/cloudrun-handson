@@ -14,7 +14,7 @@ env:
   WIF_POOL_ID: github-actions-pool-20250604
   WIF_POOL_PROVIDER_ID: github-actions-pool-provider
   SERVICE_ACCOUNT: github-actions-sa@cloudrun-handson-461709.iam.gserviceaccount.com
-  CLOUDRUN_SERVICE: cloudrun-handson
+  CLOUDRUN_SERVICE: app
   ARTIFACT_REGISTRY: cloudrun-handson
 
 jobs:
@@ -97,4 +97,5 @@ jobs:
             --image=${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.ARTIFACT_REGISTRY }}/${{ env.CLOUDRUN_SERVICE }}:sha-${{ github.sha }} \
             --region=${{ env.REGION }} \
             --service-account=${{ env.SERVICE_ACCOUNT }} \
+            --env-vars-file=env.yaml \
             --allow-unauthenticated

@@ -16,26 +16,6 @@ resource "google_cloud_run_v2_service" "app" {
           memory = "1024Mi"
         }
       }
-
-      env {
-        name  = "DB_HOST"
-        value = "10.10.0.3"
-      }
-
-      env {
-        name  = "DB_USER"
-        value = "dbuser"
-      }
-
-      env {
-        name  = "DB_PASSWORD"
-        value = "dbpass"
-      }
-
-      env {
-        name  = "DB_NAME"
-        value = "maindb"
-      }
     }
 
     vpc_access {
