@@ -1,3 +1,7 @@
+# ==================================================
+# 消さない
+# ==================================================
+
 # resource "google_service_account" "cloudrun_sa" {
 #   account_id   = "cloudrun-sa"
 #   display_name = "CloudRunServiceAccount"

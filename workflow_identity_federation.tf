@@ -1,3 +1,7 @@
+# ==================================================
+# 消さない
+# ==================================================
+
 resource "google_iam_workload_identity_pool" "gha" {
   project                   = local.project_id
   workload_identity_pool_id = "github-actions-pool-20250604"

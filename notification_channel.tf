@@ -1,3 +1,8 @@
+# ==================================================
+# 消さない
+# ==================================================
+
+
 resource "google_monitoring_notification_channel" "email" {
   display_name = "Email Allerts"
   type         = "email"
