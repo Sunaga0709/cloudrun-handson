@@ -7,13 +7,13 @@ on:
       - main
 
 env:
+  PLATFORMS: linux/amd64
   PROJECT_NUMBER: 623372444441
   PROJECT_ID: cloudrun-handson-461709
   REGION: asia-northeast1
   WIF_POOL_ID: github-actions-pool
   WIF_POOL_PROVIDER_ID: github-actions-pool-provider
   SERVICE_ACCOUNT: github-actions-sa@cloudrun-handson-461709.iam.gserviceaccount.com
-  PLATFORMS: linux/amd64
   CLOUDRUN_SERVICE: cloudrun-handson
   ARTIFACT_REGISTRY: cloudrun-handson
 
